@@ -12,19 +12,6 @@ fun main() {
             }
         }
     }
-
-    val seenValues = mutableSetOf<Int>()
-    val seenSums = mutableMapOf<Int, Pair<Int, Int>>()
-
-    values.forEach { value ->
-        val complement = seenSums[2020 - value]
-        if (complement != null) {
-            println("XXX: ${value * complement.first * complement.second}")
-            return
-        }
-        seenValues.forEach { seenValue -> seenSums[value + seenValue] = value to seenValue }
-        seenValues.add(value)
-    }
 }
 
 const val p1Input = "1630\n" +
