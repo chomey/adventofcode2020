@@ -1,5 +1,5 @@
 fun main() {
-    val values = loadInt(p1Input)
+    val values = loadInt(input)
     values.forEach { a ->
         values.forEach { b ->
             if (a + b == 2020) {
@@ -14,7 +14,7 @@ fun main() {
     }
 }
 
-const val p1Input = "1630\n" +
+private const val input = "1630\n" +
         "1801\n" +
         "1917\n" +
         "1958\n" +
