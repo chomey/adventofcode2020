@@ -1,3 +1,5 @@
+import java.io.File
+
 data class Node<T>(val left: Node<T>? = null, val value: T, val right: Node<T>? = null)
 
 class Point(val x: Int, val y: Int) {
@@ -16,10 +18,10 @@ class Point(val x: Int, val y: Int) {
 operator fun Point.plus(other: Point) = Point(x + other.x, y + other.y)
 operator fun Point.times(multiplier: Int) = Point(x * multiplier, y * multiplier)
 
-fun load(input: String): List<String> = input.split("\n")
-fun loadInt(input: String) = load(input).map { it.toInt() }
-fun loadGrid(input: String): List<List<Char>> {
-    return input.split("\n").map {line ->
+fun load(filename: String): List<String> = File(filename).readLines()
+fun loadInt(filename: String) = load(filename).map { it.toInt() }
+fun loadGrid(filename: String): List<List<Char>> {
+    return load(filename).map { line ->
         line.toCharArray().toList()
     }
 }
