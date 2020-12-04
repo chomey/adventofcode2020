@@ -1,5 +1,5 @@
 fun main() {
-    val records: List<String> = load("P4.txt")
+    val records = load("P4.txt").joinToString(separator = " ").split("  ")
     val requiredKeys = setOf(
         "byr",
         "iyr",
