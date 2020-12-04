@@ -1,4 +1,8 @@
+@file:Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+
+import java.io.BufferedReader
 import java.io.File
+import java.io.InputStreamReader
 
 data class Node<T>(val left: Node<T>? = null, val value: T, val right: Node<T>? = null)
 
@@ -18,7 +22,8 @@ class Point(val x: Int, val y: Int) {
 operator fun Point.plus(other: Point) = Point(x + other.x, y + other.y)
 operator fun Point.times(multiplier: Int) = Point(x * multiplier, y * multiplier)
 
-fun load(filename: String): List<String> = File(filename).readLines()
+fun load(filename: String): List<String> =
+    BufferedReader(InputStreamReader(ClassLoader.getSystemClassLoader().getResourceAsStream(filename))).readLines()
 fun loadInt(filename: String) = load(filename).map { it.toInt() }
 fun loadGrid(filename: String): List<List<Char>> {
     return load(filename).map { line ->
