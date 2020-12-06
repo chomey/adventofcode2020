@@ -1,5 +1,5 @@
 fun main() {
-    val lines: List<String> = load("P6.txt").joinToString(separator = " ").split("  ")
+    val lines: List<String> = loadDoubleSpaced("P6.txt")
     var sum = 0L
     lines.forEach { sum += it.replace(" ", "").chars().distinct().count() }
     println(sum)

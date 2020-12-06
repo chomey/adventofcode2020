@@ -8,7 +8,7 @@ fun main() {
         }
     }
 
-    val records = load("P4.txt").joinToString(separator = " ").split("  ")
+    val records = loadDoubleSpaced("P4.txt")
     val required = mapOf(
         "byr" to fun(s: String) { bounds(s.toInt(), 1920, 2002) },
         "iyr" to fun(s: String) { bounds(s.toInt(), 2010, 2020) },
