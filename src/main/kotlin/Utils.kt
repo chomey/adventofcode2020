@@ -21,8 +21,40 @@ class Point(val x: Int, val y: Int) {
 operator fun Point.plus(other: Point) = Point(x + other.x, y + other.y)
 operator fun Point.times(multiplier: Int) = Point(x * multiplier, y * multiplier)
 
+class Machine {
+    var nextInstruction = 0
+    var acc = 0
+    var success = false
+
+    fun run(instructions: List<Pair<String, Int>>, blockAfterCycle: (Machine) -> Boolean) {
+        while (true) {
+            val (instruction, num) = instructions[nextInstruction]
+            when (instruction) {
+                "nop" -> nextInstruction++
+                "acc" -> {
+                    nextInstruction++
+                    acc += num
+                }
+                "jmp" -> nextInstruction += num
+                else -> error("Unknown instruction: $instruction $num")
+            }
+            val shouldExit = blockAfterCycle(this)
+            if (shouldExit) {
+                return
+            }
+        }
+    }
+}
+
 fun load(filename: String) =
     BufferedReader(InputStreamReader(ClassLoader.getSystemClassLoader().getResourceAsStream(filename))).readLines()
+
+fun loadInstructions(filename: String): List<Pair<String, Int>> {
+    return load(filename).map {
+        val splits = it.split(" ")
+        splits[0] to splits[1].toInt()
+    }
+}
 
 fun loadDoubleSpaced(filename: String) = load(filename).joinToString(separator = " ").split("  ")
 fun loadInt(filename: String) = load(filename).map { it.toInt() }
