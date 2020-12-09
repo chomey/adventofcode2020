@@ -1,5 +1,5 @@
 fun main() {
-    val values = load( "P2.txt")
+    val values = load( "P02.txt")
     var result = 0
     values.forEach {
         val splits = it.split(" ")

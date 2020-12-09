@@ -1,5 +1,5 @@
 fun main() {
-    val lines: List<String> = load("P5.txt")
+    val lines: List<String> = load("P05.txt")
     var max = Integer.MIN_VALUE
     val seats = mutableSetOf<Int>()
     lines.forEach {

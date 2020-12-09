@@ -1,5 +1,5 @@
 fun main() {
-    val values = loadInt("P1.txt")
+    val values = loadInt("P01.txt")
     values.forEach { a ->
         values.forEach { b ->
             if (a + b == 2020) {

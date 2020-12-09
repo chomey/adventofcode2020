@@ -1,5 +1,5 @@
 fun main() {
-    val loadedInstructions: List<Pair<String, Int>> = loadInstructions("P8.txt")
+    val loadedInstructions: List<Pair<String, Int>> = loadInstructions("P08.txt")
     val machine = Machine()
 
     val seen = mutableSetOf(0)

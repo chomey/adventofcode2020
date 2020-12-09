@@ -1,5 +1,5 @@
 fun main() {
-    val lines: List<String> = load("P7.txt")
+    val lines: List<String> = load("P07.txt")
     val bagsMap = mutableMapOf<String, MutableSet<String>>()
     lines.forEach {
         val parts = it.replace("bags", "bag").split(" contain ")

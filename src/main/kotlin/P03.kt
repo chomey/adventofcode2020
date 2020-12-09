@@ -13,7 +13,7 @@ fun func(grid: List<List<Char>>, x: Int, y: Int): Long {
 }
 
 fun main() {
-    val grid = loadGrid("P3.txt")
+    val grid = loadGrid("P03.txt")
     var count = func(grid, 3, 1)
     count *= func(grid, 1, 1)
     count *= func(grid, 5, 1)
