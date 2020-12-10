@@ -23,8 +23,7 @@ fun main() {
 
     val dp = Array(lines.size) { 0L }
     dp[0] = 1
-    dp[1] = 1
-    for (i in 2 until lines.size) {
+    for (i in 1 until lines.size) {
         var sum = 0L
         for (j in 1 until kotlin.math.min(i, 3) + 1) {
             if (lines[i] - lines[i - j] <= 3) {
