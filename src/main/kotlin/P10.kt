@@ -22,9 +22,8 @@ fun main() {
     println(ones * threes)
 
     val dp = Array(lines.size) { 0L }
-    dp[0] = 1
-    for (i in 1 until lines.size) {
-        var sum = 0L
+    for (i in 0 until lines.size) {
+        var sum = 1L
         for (j in 1 until kotlin.math.min(i, 3) + 1) {
             if (lines[i] - lines[i - j] <= 3) {
                 sum = Math.addExact(sum, dp[i - j])
