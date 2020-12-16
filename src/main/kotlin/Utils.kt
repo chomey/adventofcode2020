@@ -65,24 +65,22 @@ fun loadGrid(filename: String): List<List<Char>> {
 }
 
 fun <T> permutations(values: List<T>): List<List<T>> {
-    val results = mutableListOf<List<T>>()
-    if (values.isEmpty()) {
-        return listOf()
+    if (values.size < 2) {
+        return listOf(values)
     }
 
+    val result = mutableListOf<List<T>>()
     values.indices.forEach {
         val value = values[it]
         val remainingValues = values.toMutableList().apply { removeAt(it) }
         val permutationsOfRemaining = permutations(remainingValues)
-        val newResult = mutableListOf(value)
-        if (permutationsOfRemaining.isEmpty()) {
-            results.add(newResult)
-        } else {
-            permutationsOfRemaining.forEach { permutation ->
-                newResult.addAll(permutation)
-                results.add(newResult.toMutableList().apply { addAll(permutation) })
-            }
+        permutationsOfRemaining.forEach { permutationOfRemaining ->
+            result.add(listOf(value) + permutationOfRemaining)
         }
     }
-    return results
+    return result
+}
+
+fun main() {
+    println(permutations(listOf(1, 2, 3, 4)))
 }

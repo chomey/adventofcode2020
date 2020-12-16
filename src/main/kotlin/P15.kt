@@ -3,7 +3,7 @@ fun main() {
     val vals = input.split(",").map { it.toInt() }
 
     var counter = 0
-    val lastSaidTurns = mutableMapOf<Int, Int>()
+    val lastSaidTurns = HashMap<Int, Int>(1000000)
     var lastSaid = 0
     while (counter < 30000000) {
         if (counter < vals.size) {
