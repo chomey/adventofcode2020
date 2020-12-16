@@ -7,19 +7,16 @@ fun main() {
     val myTicket = lines[1].split("\n")[1].split(",").map { it.toInt() }
     validTickets.add(myTicket)
 
-    val possibleCategories = computePossibleCategories(myTicket, specValues, validTickets)
+    val possibleCategories = computePossibleCategories(specValues, validTickets)
     topologicalSortPossible(possibleCategories)
 
-    println(computeProduct(possibleCategories, myTicket))
+    println(computeProduct(possibleCategories.map { it.first() }, myTicket))
 }
 
-private fun computeProduct(
-    possibleCategories: MutableList<MutableSet<String>>,
-    myTicket: List<Int>
-): Long {
+private fun computeProduct(possibleCategories: List<String>, myTicket: List<Int>): Long {
     var product = 1L
     for (i in possibleCategories.indices) {
-        val category = possibleCategories[i].first()
+        val category = possibleCategories[i]
         if (category.startsWith("departure")) {
             product *= myTicket[i]
         }
@@ -29,40 +26,29 @@ private fun computeProduct(
 
 private fun topologicalSortPossible(possibleCategories: MutableList<MutableSet<String>>) {
     while (possibleCategories.any { it.size != 1 }) {
-        for (i in possibleCategories.indices) {
-            val categorySet = possibleCategories[i]
-            if (categorySet.size == 1) {
-                val lockedIn = categorySet.first()
-                for (j in possibleCategories.indices) {
-                    if (i == j) {
-                        continue
-                    }
-                    possibleCategories[j].remove(lockedIn)
-                }
+        possibleCategories.filter { it.size == 1 }.forEach {
+            val lockedIn = it.first()
+            possibleCategories.filter { it2 -> it != it2 }.forEach { it2 ->
+                it2.remove(lockedIn)
             }
         }
     }
 }
 
 private fun computePossibleCategories(
-    myTicket: List<Int>,
     specValues: MutableMap<String, MutableSet<Pair<Int, Int>>>,
     validTickets: MutableSet<List<Int>>
 ): MutableList<MutableSet<String>> {
     val possibleCategories = mutableListOf<MutableSet<String>>()
-    repeat(myTicket.size) { possibleCategories.add(specValues.keys.toMutableSet()) }
+    repeat(validTickets.first().size) { possibleCategories.add(specValues.keys.toMutableSet()) }
 
     possibleCategories.indices.forEach {
         val possibleForThis = possibleCategories[it]
         val iter = possibleForThis.iterator()
         while (iter.hasNext()) {
             val curr = iter.next()
-            val ranges = specValues[curr]!!
             val isValid = validTickets.all { validTicket ->
-                val ticketValue = validTicket[it]
-                ranges.any { (min, max) ->
-                    ticketValue in min..max
-                }
+                specValues[curr]!!.any { (min, max) -> validTicket[it] in min..max }
             }
             if (!isValid) {
                 iter.remove()
@@ -80,16 +66,16 @@ private fun sortInvalidTickets(
     val validTickets = mutableSetOf<List<Int>>()
     val nearbyTickets = lines[2].split("\n")
     for (i in 1 until nearbyTickets.size) {
-        val numbersOnTicket = nearbyTickets[i].split(",").map { it.toInt() }
+        val nums = nearbyTickets[i].split(",").map { it.toInt() }
         var allValid = true
-        numbersOnTicket.forEach {
+        nums.forEach {
             if (!isAnyValid(specValues, it)) {
                 sum += it
                 allValid = false
             }
         }
         if (allValid) {
-            validTickets.add(numbersOnTicket)
+            validTickets.add(nums)
         }
     }
     println(sum)
@@ -116,6 +102,6 @@ private fun parseRanges(lines: List<String>): MutableMap<String, MutableSet<Pair
 fun isAnyValid(specValues: MutableMap<String, MutableSet<Pair<Int, Int>>>, i: Int): Boolean =
     specValues.any { (_, value) ->
         value.any {
-            i >= it.first && i <= it.second
+            i in it.first..it.second
         }
     }
