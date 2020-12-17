@@ -20,6 +20,7 @@ data class Point(val x: Int, val y: Int) {
 
 operator fun Point.plus(other: Point) = Point(x + other.x, y + other.y)
 operator fun Point.times(multiplier: Int) = Point(x * multiplier, y * multiplier)
+data class Quad<X, Y, Z, W>(val x: X, val y: Y, val z: Z, val w: W)
 
 class Machine {
     var nextInstruction = 0
