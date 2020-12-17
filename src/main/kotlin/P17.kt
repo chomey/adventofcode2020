@@ -45,23 +45,22 @@ fun part1(grid: MutableMap<Triple<Int, Int, Int>, Char>) {
                     if (i == 0 && j == 0 && k == 0) {
                         continue
                     }
-                    if (lastGrid.getOrDefault(Triple(it.first + i, it.second + j, it.third + k), '.') == '#') {
+                    if (lastGrid[Triple(it.first + i, it.second + j, it.third + k)] == '#') {
                         active++
                     }
                 }
             }
         }
 
-        when (lastGrid.getOrDefault(it, '.')) {
-            '.' -> grid[it] = when (active) {
-                3 -> '#'
-                else -> '.'
-            }
+        when (lastGrid[it]) {
             '#' -> grid[it] = when (active) {
                 2, 3 -> '#'
                 else -> '.'
             }
-            else -> error("invalid")
+            else -> grid[it] = when (active) {
+                3 -> '#'
+                else -> '.'
+            }
         }
     }
 }
@@ -92,7 +91,7 @@ private fun part2(grid2: MutableMap<Quad<Int, Int, Int, Int>, Char>) {
                         if (i == 0 && j == 0 && k == 0 && l == 0) {
                             continue
                         }
-                        if (lastGrid.getOrDefault(Quad(it.x + i, it.y + j, it.z + k, it.w + l), '.') == '#') {
+                        if (lastGrid[Quad(it.x + i, it.y + j, it.z + k, it.w + l)] == '#') {
                             active++
                         }
                     }
@@ -100,16 +99,15 @@ private fun part2(grid2: MutableMap<Quad<Int, Int, Int, Int>, Char>) {
             }
         }
 
-        when (lastGrid.getOrDefault(it, '.')) {
-            '.' -> grid2[it] = when (active) {
-                3 -> '#'
-                else -> '.'
-            }
+        when (lastGrid[it]) {
             '#' -> grid2[it] = when (active) {
                 2, 3 -> '#'
                 else -> '.'
             }
-            else -> error("invalid")
+            else -> grid2[it] = when (active) {
+                3 -> '#'
+                else -> '.'
+            }
         }
     }
 }
