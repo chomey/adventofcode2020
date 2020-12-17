@@ -20,7 +20,15 @@ data class Point(val x: Int, val y: Int) {
 
 operator fun Point.plus(other: Point) = Point(x + other.x, y + other.y)
 operator fun Point.times(multiplier: Int) = Point(x * multiplier, y * multiplier)
-data class Quad<X, Y, Z, W>(val x: X, val y: Y, val z: Z, val w: W)
+
+data class NDPoint(val coords: List<Int>) {
+    constructor(vararg values: Int) : this(listOf<Int>(*values.toTypedArray()))
+
+    val x by lazy { coords[0] }
+    val y by lazy { coords[1] }
+    val z by lazy { coords[2] }
+    val w by lazy { coords[3] }
+}
 
 class Machine {
     var nextInstruction = 0
@@ -80,8 +88,4 @@ fun <T> permutations(values: List<T>): List<List<T>> {
         }
     }
     return result
-}
-
-fun main() {
-    println(permutations(listOf(1, 2, 3, 4)))
 }
