@@ -18,7 +18,6 @@ fun main() {
         tiles[tileNumber] = grid
     }
 
-
     val tileSides = mutableMapOf<Int, MutableMap<String, String>>()
     tiles.forEach { (tileNumber, grid) ->
         val sides = mutableMapOf<String, String>()
@@ -211,12 +210,7 @@ fun findNextRight(
         "t" -> baseTiles.transformKeys { Point(it.y, it.x) }
         "tr" -> baseTiles.transformKeys { Point(it.y, length - it.x - 1) }
         "r" -> baseTiles.transformKeys { Point(length - it.x - 1, it.y) }
-        "rr" -> baseTiles.transformKeys {
-            val newPoint = Point(length - it.x - 1, length - it.y - 1)
-            println(it)
-            println(newPoint)
-            newPoint
-        }
+        "rr" -> baseTiles.transformKeys { Point(length - it.x - 1, length - it.y - 1) }
         else -> error("Implement right: ${side.key}")
     }
 
@@ -252,6 +246,11 @@ fun addToMapRight(
 }
 
 fun printGrid(grid: Grid<Char>) {
+    var skipPrint = false
+    skipPrint = true
+    if(skipPrint){
+        return
+    }
     println("Size: ${grid.size}")
     for (y in 0 until 2000) {
         var foundRow = false
@@ -280,8 +279,8 @@ fun hasSeaMonster(grid: Grid<Char>) {
             }
         }
     }
-    val maxX = grid.keys.map { it.x }.max()!!
-    val maxY = grid.keys.map { it.y }.max()!!
+    val maxX = grid.keys.map { it.x }.maxOrNull()!!
+    val maxY = grid.keys.map { it.y }.maxOrNull()!!
 
     var sum = 0
     for (x in 0 until maxX) {
