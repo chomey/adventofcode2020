@@ -247,7 +247,7 @@ fun addToMapRight(
 
 fun printGrid(grid: Grid<Char>) {
     var skipPrint = false
-    skipPrint = true
+    skipPrint = true // COMMENT THIS LINE OUT TO PRINT
     if(skipPrint){
         return
     }
