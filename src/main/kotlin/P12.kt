@@ -12,10 +12,10 @@ fun main() {
         val mag = it.substring(1).toInt()
 
         when (inst) {
-            'N' -> point += Point.NORTH.times(mag)
-            'S' -> point += Point.SOUTH.times(mag)
-            'E' -> point += Point.EAST.times(mag)
-            'W' -> point += Point.WEST.times(mag)
+            'N' -> point += Point(0, mag)
+            'S' -> point += Point(0, -mag)
+            'E' -> point += Point(mag, 0)
+            'W' -> point += Point(-mag, 0)
             'L' -> {
                 currDir += mag % 360
                 while (currDir >= 360) {
@@ -29,10 +29,10 @@ fun main() {
                 }
             }
             'F' -> when (currDir) {
-                0 -> point += Point.EAST.times(mag)
-                90 -> point += Point.NORTH.times(mag)
-                180 -> point += Point.WEST.times(mag)
-                270 -> point += Point.SOUTH.times(mag)
+                0 -> point += Point(mag, 0)
+                90 -> point += Point(0, mag)
+                180 -> point += Point(-mag, 0)
+                270 -> point += Point(0, -mag)
             }
         }
 

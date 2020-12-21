@@ -5,29 +5,34 @@ import java.io.InputStreamReader
 
 data class Node<T>(val left: Node<T>? = null, val value: T, val right: Node<T>? = null)
 
-data class Point(val x: Int, val y: Int) {
-    companion object {
-        val LEFT = Point(-1, 0)
-        val RIGHT = Point(1, 0)
-        val UP = Point(0, 1)
-        val DOWN = Point(0, -1)
-        val NORTH = UP
-        val SOUTH = DOWN
-        val EAST = RIGHT
-        val WEST = LEFT
-    }
-}
 
-operator fun Point.plus(other: Point) = Point(x + other.x, y + other.y)
-operator fun Point.times(multiplier: Int) = Point(x * multiplier, y * multiplier)
-
-data class NDPoint(val coords: List<Int>) {
+data class Point(val coords: List<Int>) {
     constructor(vararg values: Int) : this(listOf<Int>(*values.toTypedArray()))
 
     val x by lazy { coords[0] }
     val y by lazy { coords[1] }
     val z by lazy { coords[2] }
     val w by lazy { coords[3] }
+
+    operator fun plus(other: Point) = Point(x + other.x, y + other.y)
+    operator fun times(multiplier: Int) = Point(x * multiplier, y * multiplier)
+}
+
+data class Grid<T>(var grid: MutableMap<Point, T> = mutableMapOf()) {
+    operator fun get(p: Point): T? = grid[p]
+    operator fun get(x: Int, y: Int): T? = grid[Point(x, y)]
+    operator fun set(p: Point, t: T) {
+        grid[p] = t
+    }
+    operator fun set(x: Int, y: Int, t: T) {
+        grid[Point(x, y)] = t
+    }
+
+    val keys = grid.keys
+    val values = grid.values
+    val size = grid.size
+    fun isEmpty() = grid.isEmpty()
+    fun transformKeys(functor: (Point) -> Point): Grid<T> = this.also { grid = grid.mapKeys { functor(it.key) }.toMutableMap() }
 }
 
 class Machine {

@@ -14,10 +14,10 @@ fun main() {
         val mag = it.substring(1).toInt()
 
         when (inst) {
-            'N' -> waypoint += Point.NORTH.times(mag)
-            'S' -> waypoint += Point.SOUTH.times(mag)
-            'E' -> waypoint += Point.EAST.times(mag)
-            'W' -> waypoint += Point.WEST.times(mag)
+            'N' -> waypoint += Point(0, mag)
+            'S' -> waypoint += Point(0, -mag)
+            'E' -> waypoint += Point(mag, 0)
+            'W' -> waypoint += Point(-mag, 0)
             'L' -> {
                 when (mag % 360) {
                     0 -> {

@@ -1,14 +1,14 @@
 fun main() {
     val lines = loadGrid("P17.txt")
 
-    val grid = mutableSetOf<NDPoint>()
-    val grid2 = mutableSetOf<NDPoint>()
+    val grid = mutableSetOf<Point>()
+    val grid2 = mutableSetOf<Point>()
     for (y in lines.indices) {
         for (x in lines[0].indices) {
             when (lines[x][y]) {
                 '#' -> {
-                    grid.add(NDPoint(x, y, 0))
-                    grid2.add(NDPoint(x, y, 0, 0))
+                    grid.add(Point(x, y, 0))
+                    grid2.add(Point(x, y, 0, 0))
                 }
             }
         }
@@ -24,15 +24,15 @@ fun main() {
     println(grid2.size)
 }
 
-fun part1(grid: MutableSet<NDPoint>) {
+fun part1(grid: MutableSet<Point>) {
     val lastGrid = grid.toSet()
 
-    val toEvaluate = mutableSetOf<NDPoint>()
+    val toEvaluate = mutableSetOf<Point>()
     grid.forEach {
         for (i in -1..1) {
             for (j in -1..1) {
                 for (k in -1..1) {
-                    toEvaluate.add(NDPoint(it.x + i, it.y + j, it.z + k))
+                    toEvaluate.add(Point(it.x + i, it.y + j, it.z + k))
                 }
             }
         }
@@ -47,7 +47,7 @@ fun part1(grid: MutableSet<NDPoint>) {
                     if (i == 0 && j == 0 && k == 0) {
                         continue
                     }
-                    if (lastGrid.contains(NDPoint(it.x + i, it.y + j, it.z + k))) {
+                    if (lastGrid.contains(Point(it.x + i, it.y + j, it.z + k))) {
                         active++
                     }
                 }
@@ -65,16 +65,16 @@ fun part1(grid: MutableSet<NDPoint>) {
     }
 }
 
-private fun part2(grid: MutableSet<NDPoint>) {
+private fun part2(grid: MutableSet<Point>) {
     val lastGrid = grid.toSet()
 
-    val toEvaluate = mutableSetOf<NDPoint>()
+    val toEvaluate = mutableSetOf<Point>()
     grid.forEach {
         for (i in -1..1) {
             for (j in -1..1) {
                 for (k in -1..1) {
                     for (l in -1..1) {
-                        toEvaluate.add(NDPoint(it.x + i, it.y + j, it.z + k, it.w + l))
+                        toEvaluate.add(Point(it.x + i, it.y + j, it.z + k, it.w + l))
                     }
                 }
             }
@@ -91,7 +91,7 @@ private fun part2(grid: MutableSet<NDPoint>) {
                         if (i == 0 && j == 0 && k == 0 && l == 0) {
                             continue
                         }
-                        if (lastGrid.contains(NDPoint(it.x + i, it.y + j, it.z + k, it.w + l))) {
+                        if (lastGrid.contains(Point(it.x + i, it.y + j, it.z + k, it.w + l))) {
                             active++
                         }
                     }
