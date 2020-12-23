@@ -12,8 +12,8 @@ fun main() {
         input.add(i)
     }
 
-    val left = mutableMapOf<Int, Int>()
-    val right = mutableMapOf<Int, Int>()
+    val left = HashMap<Int, Int>(max)
+    val right = HashMap<Int, Int>(max)
     left[input[0]] = input[input.size - 1]
     right[input[0]] = input[1]
     for (i in 1 until input.size - 1) {
