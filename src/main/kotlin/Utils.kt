@@ -5,34 +5,41 @@ import java.io.InputStreamReader
 
 data class Node<T>(val left: Node<T>? = null, val value: T, val right: Node<T>? = null)
 
-
-data class Point(val coords: List<Int>) {
-    constructor(vararg values: Int) : this(listOf<Int>(*values.toTypedArray()))
+data class Point(val coords: List<Double>) {
+    constructor(vararg values: Number) : this(values.asList().map { it.toDouble() })
 
     val x by lazy { coords[0] }
     val y by lazy { coords[1] }
     val z by lazy { coords[2] }
     val w by lazy { coords[3] }
 
-    operator fun plus(other: Point) = Point(x + other.x, y + other.y)
-    operator fun times(multiplier: Int) = Point(x * multiplier, y * multiplier)
+    operator fun plus(other: Point): Point {
+        if (coords.size != other.coords.size) {
+            error("Invalid sizes: ${coords.size} vs ${other.coords.size}")
+        }
+        return Point(coords.indices.map { coords[it] + other.coords[it] })
+    }
+
+    operator fun times(multiplier: Number): Point = Point(coords.map { it * multiplier.toDouble() })
 }
 
 data class Grid<T>(var grid: MutableMap<Point, T> = mutableMapOf()) {
     operator fun get(p: Point): T? = grid[p]
-    operator fun get(x: Int, y: Int): T? = grid[Point(x, y)]
+    operator fun get(x: Number, y: Number): T? = grid[Point(x.toDouble(), y.toDouble())]
     operator fun set(p: Point, t: T) {
         grid[p] = t
     }
-    operator fun set(x: Int, y: Int, t: T) {
-        grid[Point(x, y)] = t
+
+    operator fun set(x: Number, y: Number, t: T) {
+        grid[Point(x.toDouble(), y.toDouble())] = t
     }
 
     val keys = grid.keys
     val values = grid.values
     val size = grid.size
     fun isEmpty() = grid.isEmpty()
-    fun transformKeys(functor: (Point) -> Point): Grid<T> = this.also { grid = grid.mapKeys { functor(it.key) }.toMutableMap() }
+    fun transformKeys(functor: (Point) -> Point): Grid<T> =
+        this.also { grid = grid.mapKeys { functor(it.key) }.toMutableMap() }
 }
 
 class Machine {

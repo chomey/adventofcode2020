@@ -83,13 +83,13 @@ fun cutBorders(putTogether: Grid<Char>): Grid<Char> {
     val maxX = putTogether.keys.map { it.x }.maxOrNull()!!
     val maxY = putTogether.keys.map { it.y }.maxOrNull()!!
     val tempResult = mutableListOf<List<Char>>()
-    Outer@ for (y in 0 until maxY) {
+    Outer@ for (y in 0 until maxY.toInt()) {
         val row = mutableListOf<Char>()
         when (y % 10) {
             0, 9 -> continue@Outer
             else -> Unit
         }
-        Inner@ for (x in 0 until maxX) {
+        Inner@ for (x in 0 until maxX.toInt()) {
             when (x % 10) {
                 0, 9 -> continue@Inner
                 else -> row.add(putTogether[x, y]!!)
@@ -239,7 +239,7 @@ fun addToMapRight(
     }
     for (y in 0 until length) {
         for (x in 0 until length) {
-            result[x + xStart, y + yStart] = toAdd[x, y]!!
+            result[x + xStart.toInt(), y + yStart.toInt()] = toAdd[x, y]!!
         }
     }
     printGrid(result)
@@ -279,8 +279,8 @@ fun hasSeaMonster(grid: Grid<Char>) {
             }
         }
     }
-    val maxX = grid.keys.map { it.x }.maxOrNull()!!
-    val maxY = grid.keys.map { it.y }.maxOrNull()!!
+    val maxX = grid.keys.map { it.x }.maxOrNull()!!.toInt()
+    val maxY = grid.keys.map { it.y }.maxOrNull()!!.toInt()
 
     var sum = 0
     for (x in 0 until maxX) {
